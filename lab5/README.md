@@ -98,8 +98,11 @@ have a different height, creating imbalances higher up.
 
 **TODO 1.1:** Briefly recall the three deletion cases from Lab 3/4:
 - What happens when the target node has 0 children?
+- it is deleted normally
 - What happens when the target node has 1 child?
+- the child replaces the node
 - What happens when the target node has 2 children, and why is the in-order successor used?
+- the in order successor becomes the target node. it is used because it is the leftest node on the right tree, making it the next logical number that can be used without breaking the tree order (the children are smaller).
 
 ### 1.2 Short answer: Height change after deletion
 
@@ -122,6 +125,13 @@ After all insertions, the tree is:
      /  \
    10    30
 ```
+```
+      30
+     /  
+   10    
+     \
+      20
+```
 
 All nodes are balanced: 20 has BF=0, 10 has BF=0, 30 has BF=0.
 
@@ -139,8 +149,8 @@ All nodes are balanced: 20 has BF=0, 10 has BF=0, 30 has BF=0.
 | Step | Action | Tree state | Unbalanced node | BF | Signature | Rotation | Notes |
 |---|---|---|---|---|---|---|---|
 | 1 | Delete 10 | 20 root, 30 right child | - | - | - | - | Leaf deletion |
-| 2 | Rebalance from 20 | TODO | TODO | TODO | TODO | TODO | TODO |
-| 3 | After rotation | TODO | TODO | TODO | - | - | Final state |
+| 2 | Rebalance from 20 | 20 root, 30 right | none | 1 | none | none | 1 is considered balanced |
+| 3 | After rotation |  |  |  | - | - | Final state |
 
 ### 2.2 Trace: Double rotation after deletion
 
@@ -168,7 +178,7 @@ All nodes are balanced (you can verify balance factors are in {-1, 0, 1}).
 
 | Step | Action | Current node | BF before | Signature | Rotation applied | BF after |
 |---|---|---|---|---|---|---|
-| 1 | Delete 5 | 10 | TODO | TODO | TODO | TODO |
+| 1 | Delete 5 | 10 | 1 | - | - | 1 |
 | 2 | Rebalance parent | 20 | TODO | TODO | TODO | TODO |
 | 3 | Continue up | (if needed) | TODO | TODO | TODO | TODO |
 
