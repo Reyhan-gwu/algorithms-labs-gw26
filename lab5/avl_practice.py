@@ -183,7 +183,7 @@ def avl_delete(tree, key):
     - Unlike insertion, deletion may require multiple rotations at different ancestors.
     - Use balance factor signs to determine rotation type (no inserted key available).
     - Continue rebalancing all the way to the root.
-    """
+    
     z = tree_search(tree.root, key)
     if z is None:
         return None
@@ -236,6 +236,31 @@ def avl_delete(tree, key):
 
         current = current.parent
 
+    return z
+    """
+    z = bst_delete(tree, key)          #Perform BST deletion; z is the deleted node (or None)
+    current = z.parent     #Start rebalancing from the parent of the deleted node
+    while current != None:
+        update_height(current)        #Recompute height after structural change
+        bf = balance_factor(current)
+        if abs(bf) >= 2:                 #Imbalance detected
+            #Determine which case (LL, RR, LR, RL) and rotate
+            #Unlike insertion, the key is NOT available—use bf signs instead
+            if bf > 1:                   #Left-heavy
+                if balance_factor(current.left) >= 0:
+                    rotate_right(tree, current)          #LL
+                    current = current.parent          #Move up after rotation
+                else:
+                    rotate_left_right(tree, current)     #LR
+                    current = current.parent          #Move up after rotation
+            elif bf < -1:           #Right-heavy
+                if balance_factor(current.right) <= 0:
+                    rotate_left(tree, current)           #RR
+                    current = current.parent          #Move up after rotation
+                else:
+                    rotate_right_left(tree, current)     #RL
+                    current = current.parent          #Move up after rotation
+        current = current.parent      #Continue to next ancestor
     return z
 
 

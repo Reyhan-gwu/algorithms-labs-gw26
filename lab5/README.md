@@ -117,27 +117,7 @@ have a different height, creating imbalances higher up.
 
 ### Example: AVL trees for deletion traces
 
-<<<<<<< HEAD
-Recall the AVL tree built by inserting `[30, 10, 20]` iteratively (from Lab 4, Part 4.2).
-After all insertions, the tree is:
-
-```
-      20
-     /  \
-   10    30
-```
-```
-      30
-     /  
-   10    
-     \
-      20
-```
-
-All nodes are balanced: 20 has BF=0, 10 has BF=0, 30 has BF=0.
-=======
 For the traces below, we use AVL trees built carefully so that deletions trigger imbalances.
->>>>>>> 0bb8f830593ad0770775a4599a86755a817bc5d9
 
 ### 2.1 Trace: Single rotation after deletion
 
@@ -163,8 +143,8 @@ Start with this AVL tree:
 | Step | Action | Tree state | Unbalanced node | BF | Signature | Rotation | Notes |
 |---|---|---|---|---|---|---|---|
 | 1 | Delete 40 | 40 is removed (leaf) | - | - | - | - | Tree now has 30 root, 20 left, nothing right |
-| 2 | Rebalance from 30 | TODO | TODO | TODO | TODO | TODO | TODO |
-| 3 | After rotation | TODO | TODO | TODO | - | - | Final state |
+| 2 | Rebalance from 30 | make 20 root | 30 | 2 | LL | one right rotation | 20 os now root with 10 left child and 30 right child |
+| 3 | After rotation | 20 os now root with 10 left child and 30 right child | none | -1,0,1 | - | - | Final state |
 
 ### 2.2 Trace: Double rotation after deletion
 
@@ -189,7 +169,7 @@ Start with this AVL tree:
 
 | Step | Action | Current node | BF before | Signature | Rotation applied | BF after |
 |---|---|---|---|---|---|---|
-| 1 | Delete 40 | 30 | TODO | TODO | TODO | TODO |
+| 1 | Delete 40 | 30 | 2 | LR | left, then right | 1 |
 | 2 | Verify final | - | - | - | - | - |
 
 ### 2.3 Trace: Two-child deletion with rebalancing
@@ -217,8 +197,8 @@ Trace the rebalancing:
 
 | Step | Current node | BF | Imbalanced? | Violation | Rotation applied |
 |---|---|---|---|---|---|
-| 1 | (after replacing 30 with 40) | TODO | TODO | TODO | TODO |
-| 2 | (if needed, continue up) | TODO | TODO | TODO | TODO |
+| 1 | (after replacing 30 with 40) | 2 | yes | yes | LL |
+| 2 | (if needed, continue up) | - | - | - | - |
 
 ---
 
