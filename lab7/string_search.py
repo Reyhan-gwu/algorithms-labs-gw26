@@ -12,8 +12,12 @@ def naive_search(text, pattern):
     matches = []
 
     # TODO 1.2: compare characters at each shift and collect complete matches
-    raise NotImplementedError("Complete naive_search")
-
+    for s in range(0, (n - m) + 1):
+        j = 0
+        while (j < m and text[s + j] == pattern[j]):
+            j = j + 1
+        if j == m:
+            matches.append(s)
     return matches
 
 
@@ -32,8 +36,15 @@ def rabin_karp(text, pattern, d=256, q=101):
     t = 0
 
     # TODO 2.2: build the initial hashes, verify hits, and roll to each next window
-    raise NotImplementedError("Complete rabin_karp")
-
+    for j in range(0, m):
+        p = (d * p + ord(pattern[j])) % q
+        t = (d * t + ord(text[j])) % q
+    for s in range(0, (n - m) + 1):
+        if p == t:
+            if matches(text, pattern, s):
+                matches.append(s)
+        if s < n - m:
+            t = (d * (t - ord(text[s]) * h) + ord(text[s + m])) % q
     return matches
 
 
@@ -47,8 +58,12 @@ def compute_prefix_function(pattern):
     k = 0
 
     # TODO 3.2A: extend each border, following prefix links on a mismatch
-    raise NotImplementedError("Complete compute_prefix_function")
-
+    for j in (0, m):
+        while k > 0 and pattern[k] != pattern[j]:
+            k = pi[k - 1]
+        if pattern[k] == pattern[j]:
+            k = k + 1
+        pi[j] = k
     return pi
 
 
