@@ -29,9 +29,19 @@ def prim(graph, start=0):
     total = 0
 
     # TODO 1.2: grow the tree and update the keys of queued neighbors
-    raise NotImplementedError("Complete prim")
+    if (graph.isempty()): return ([], 0)
 
-    return parent, total
+    while queue.isempty() != True:
+        u = pop_min(queue)
+        if key[u] == inf: return None
+        total = total + key[u]
+        for (v, weight) in graph[u]:
+            if v.isin(queue) and weight < key[v]:
+                key[v] = weight
+                parent[v] = u
+                decrease_key(queue, v, key[v])
+
+    return (parent, total)
 
 
 def dijkstra(graph, source):
@@ -46,10 +56,18 @@ def dijkstra(graph, source):
     queue = MinPriorityQueue(distance)
 
     # TODO 2.2: finalize the closest vertex and relax its outgoing edges
-    raise NotImplementedError("Complete dijkstra")
+    while queue.isempty() != True:
+        u = pop_min(queue)
+        if distance[u] == inf: break
+        for (v, weight) in graph[u]:
+            if v.isin(queue):
+                candidate = distance[u] + weight
+                if candidate < distance[v]:
+                    distance[v] = candidate
+                    parent[v] = u
+                    decrease_key(queue, v, distance[v])
 
-    return distance, parent
-
+    return (distance, parent)
 
 if __name__ == "__main__":
     from lab_checks import check_weighted_graphs

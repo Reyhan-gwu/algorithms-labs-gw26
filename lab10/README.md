@@ -117,15 +117,17 @@ using its two endpoint labels.
 
 | Vertex removed | Edge added | `key[D]` | `key[E]` |
 |---|---|---|---|
-| `B` | TODO | TODO | TODO |
-| `C` | TODO | TODO | TODO |
-| `D` | TODO | TODO | TODO |
+| `B` | A--B | 4 | infinite |
+| `C` | B--C | 4 | 6 |
+| `D` | B--D | 4 | 6 |
 
 1. Which vertex becomes `C`'s parent, and what causes the change? 
+- B becomes C's parent. When B is removed the key for C drops to 1 and its parent changes from A to B
 
 
 2. After removing `E`, what are the tree's four edges and total weight? 
-
+- A--B (2), B--C (1), B--D (4), C--E (6)
+- Total weight = 2 + 1 + 4 + 6 = 13
 
 
 ### 1.2 Implementation
@@ -199,12 +201,14 @@ after each check, including checks that leave them unchanged.
 
 | Edge checked | Candidate | Distance of `v` | Parent of `v` |
 |---|---|---|---|
-| `B -> C` | TODO | TODO | TODO |
-| `C -> D` | TODO | TODO | TODO |
-| `C -> E` | TODO | TODO | TODO |
-| `D -> E` | TODO | TODO | TODO |
+| `B -> C` | 3 | 3 | A |
+| `C -> D` | 8 | 6 | B |
+| `C -> E` | 9 | 9 | C |
+| `D -> E` | 13 | 9 | C |
 
 Give the final distance array and the shortest path from `A` to `E`:
+- final distance array: [0, 2, 3, 6, 9]
+- Shortest path: A -> C -> E
 
  **TODO**
 
@@ -222,12 +226,17 @@ undirected graphs, including graphs with unreachable vertices.
 1. Change only the weight of `A--C` to `2.5`. Starting from `A`, what is
    `C`'s parent under each algorithm? What quantity does each algorithm
    minimize? 
+   - Prim, parent is B, minimize total tree weight
+   - Dijktra: parent A, min path length from source
 
 
 2. Consider the directed edges `S -> A: 2`, `S -> B: 5`, and `B -> A: -4`.
    Starting from `S`, which distance does Dijkstra finalize too early?
    Give the actual shortest distance and explain why the negative edge
    causes a problem.
+   - It finalizes A at 2 when the true distance is 1 
+   - S -> B -> A 
+   - Problem because it assumes a finalized vertex can't be improved later, which a negative edge breaks.
 
 
 3. Let `V` and `E` be the numbers of vertices and edges. For the provided
@@ -237,6 +246,8 @@ undirected graphs, including graphs with unreachable vertices.
    auxiliary space bounds. Exclude the input graph from space. What is
    the time bound if finding the minimum instead scans an unsorted array
    of vertices?
+   - fro both, V removals and at most O(E) decreases, so O((V + E) log V) time and O(V) space
+   - O(V^2)
 
 
 ---
